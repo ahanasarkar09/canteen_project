@@ -73,6 +73,7 @@ def admin_main():
     # TAB 2: Approve Cash Recharges
     if page=="Pending Cash Recharges":
         st.subheader("Pending Cash Recharges")
+        @st.fragment(run_every=2)
         recharges = get_pending_recharges()
         if recharges:
             for req in recharges:
