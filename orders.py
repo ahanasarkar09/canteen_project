@@ -115,7 +115,7 @@ def main():
         st.subheader("Your Orders & Status")
         
         # Automatically refresh this page every 5000 milliseconds (5 seconds)
-        st_autorefresh(interval=2500, limit=None, key="order_status_refresh")
+        #st_autorefresh(interval=2500, limit=None, key="order_status_refresh")
         
         orders = get_student_orders(student.student_id)
         if orders:
