@@ -42,10 +42,17 @@ def main():
     st.title(f"Welcome, {student.name}!")
     st.info(f"Class: **{student.student_class}** | Digital Token Balance: **₹{student.balance:.2f}**")
 
-    tabs = st.tabs(["Place Order", "Recharge Balance", "Track Orders"])
 
-    # TAB 1: Place Order
-    with tabs[0]:
+    page = st.segmented_control(
+    "Navigate",
+    options=["Today's Menu", "Request Cash Recharge", "Your orders and status"],
+    default="Today's Menu",
+    key="student_page",
+    label_visibility="collapsed"
+    )
+
+    #PAGE 1: Place Order
+    if page=="Today's Menu":
         st.subheader("Today's Menu")
         menu = get_available_menu()
         if not menu:
@@ -91,8 +98,8 @@ def main():
                         else:
                             st.error("Error placing order")
 
-    # TAB 2: Cash Recharge Request
-    with tabs[1]:
+    # PAGE 2: Cash Recharge Request
+    elif page=="Request Cash Recharge":
         st.subheader("Request Cash Recharge")
         st.write("Deposit cash with the canteen staff, then submit a recharge request here to credit your account.")
         with st.form("recharge_form"):
@@ -103,8 +110,8 @@ def main():
             request_recharge(student.student_id, amount)
             st.success(f"Recharge request for ₹{amount} submitted! Please pay cash to canteen staff for approval.")
 
-    # TAB 3: Track Orders
-    with tabs[2]:
+    # PAGE 3: Track Orders
+    elif page=="Your orders and status":
         st.subheader("Your Orders & Status")
         
         # Automatically refresh this page every 5000 milliseconds (5 seconds)
