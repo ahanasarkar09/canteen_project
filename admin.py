@@ -42,7 +42,7 @@ def admin_main():
         orders = get_all_orders()
         if orders:
             for order in orders:
-                order_id, stu_id, name, amount, status, created_at = order
+                order_id, stu_id, name, amount, quantity, status, created_at = order
                 col1, col2, col3 = st.columns([2, 2, 2])
                 with col1:
                     st.write(f"**Order #{order_id}** - Student: {name} (ID: {stu_id})")

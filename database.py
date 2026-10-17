@@ -3,6 +3,7 @@ import pandas as pd
 from werkzeug.security import generate_password_hash
 import streamlit as st
 
+
 def get_db_connection():
     db_config = st.secrets["mysql"]
     
@@ -11,7 +12,10 @@ def get_db_connection():
         user=db_config["user"],
         password=db_config["password"],
         database=db_config["database"],
-        port=int(db_config.get("port", 3306))
+        port=int(db_config["port"]),
+        ssl_ca="ca.pem",
+        ssl_verify_cert=True,
+        ssl_verify_identity=True
     )
 
 def init_db():
