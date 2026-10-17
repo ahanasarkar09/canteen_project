@@ -34,10 +34,16 @@ def admin_main():
 
     st.title("Canteen Admin Panel")
 
-    tab1, tab2, tab3 = st.tabs(["Incoming Orders", "Recharge Requests", "Manage Menu"])
+    page = st.segmented_control(
+        "Navigate",
+        options=["Process Orders", "Pending Cash Recharges", "Update Menu"],
+        default="Process Orders",
+        key="student_page",
+        label_visibility="collapsed"
+    )
 
     # TAB 1: Process Orders
-    with tab1:
+    if page=="Process Orders":
         st.subheader("Order Management")
         orders = get_all_orders()
         if orders:
@@ -65,10 +71,9 @@ def admin_main():
             st.info("No incoming orders.")
 
     # TAB 2: Approve Cash Recharges
-    with tab2:
+    if page=="Pending Cash Recharges":
         st.subheader("Pending Cash Recharges")
         recharges = get_pending_recharges()
-        st_autorefresh(interval=2500, limit=None, key="order_status_refresh")
         if recharges:
             for req in recharges:
                 req_id, stu_id, name, amount = req
@@ -84,7 +89,7 @@ def admin_main():
             st.info("No pending recharge requests.")
 
     # TAB 3: Manage Menu & Add New Items
-    with tab3:
+    if page=="Update Menu":
         st.subheader("Add New Menu Item")
         with st.form("add_item_form"):
             new_name = st.text_input("Item Name")
